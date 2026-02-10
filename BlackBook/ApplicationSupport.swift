@@ -79,6 +79,21 @@ func saveVideo(
     return destination
 }
 
+func saveFile(
+    from sourceURL: URL,
+    to contactID: UUID
+) throws -> URL {
+    let dir = try directoryForContact(id: contactID)
+    let destination = dir.appendingPathComponent(sourceURL.lastPathComponent)
+
+    try FileManager.default.copyItem(
+        at: sourceURL,
+        to: destination
+    )
+
+    return destination
+}
+
 func deleteContactMedia(id: UUID) {
     do {
         let dir = try directoryForContact(id: id)

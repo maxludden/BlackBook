@@ -17,7 +17,7 @@ final class ContactURL {
     @Relationship(inverse: \Contact.urls)
     var contact: Contact?
 
-    var url: URL? { URL(string: urlString) }
+    var url: URL
 
     init(urlString: String, type: UrlType = .other, label: String? = nil, contact: Contact? = nil) {
         self.uid = UUID()

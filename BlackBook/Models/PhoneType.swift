@@ -17,6 +17,10 @@ final class PhoneNumber {
     var number: String
     var type: PhoneType
     var label: String?
+    
+    // Inverse relationship back to the owning contact
+    @Relationship(inverse: \Contact.phoneNumbers)
+    var contact: Contact?
 
     init(number: String, type: PhoneType, label: String? = nil) {
         self.number = number
