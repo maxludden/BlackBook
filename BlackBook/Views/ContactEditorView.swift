@@ -53,7 +53,7 @@ struct ContactEditorView: View {
                     Button("Save") {
                         save()
                     }
-                    .disabled(givenName.isEmpty && familyName.isEmpty)
+                    .disabled(trimmedGivenName.isEmpty && trimmedFamilyName.isEmpty)
                 }
             }
             .onAppear(perform: loadContact)
@@ -100,6 +100,14 @@ private extension ContactEditorView {
         contact == nil ? "New Contact" : "Edit Contact"
     }
 
+    var trimmedGivenName: String {
+        givenName.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var trimmedFamilyName: String {
+        familyName.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     func loadContact() {
         guard let contact else { return }
 
@@ -120,8 +128,8 @@ private extension ContactEditorView {
     func save() {
         if let contact {
             // Update existing contact
-            contact.givenName = givenName
-            contact.familyName = familyName
+            contact.givenName = trimmedGivenName
+            contact.familyName = trimmedFamilyName
             contact.middleName = middleName.nilIfEmpty
             contact.prefix = prefix.nilIfEmpty
             contact.suffix = suffix.nilIfEmpty
@@ -136,8 +144,8 @@ private extension ContactEditorView {
         } else {
             // Create new contact
             let newContact = Contact(
-                givenName: givenName,
-                familyName: familyName
+                givenName: trimmedGivenName,
+                familyName: trimmedFamilyName
             )
 
             newContact.middleName = middleName.nilIfEmpty
