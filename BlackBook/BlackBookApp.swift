@@ -10,18 +10,60 @@ import SwiftData
 
 @main
 struct BlackBookApp: App {
-    var sharedModelContainer: ModelContainer = {
+
+    // MARK: - App Container (real data)
+
+    private var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Contact.self,
+            PhoneNumber.self,
+            EmailAddress.self,
+            PostalAddress.self,
+            ContactURL.self,
+            ContactDate.self,
+            ContactMedia.self
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+        let configuration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false
+        )
 
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            return try ModelContainer(
+                for: schema,
+                configurations: [configuration]
+            )
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            fatalError("Failed to create ModelContainer: \(error)")
         }
     }()
+
+    // MARK: - Preview Container (DEBUG only)
+
+    #if DEBUG
+    static let previewContainer: ModelContainer = {
+        let schema = Schema([
+            Contact.self,
+            PhoneNumber.self,
+            EmailAddress.self,
+            PostalAddress.self,
+            ContactURL.self,
+            ContactDate.self,
+            ContactMedia.self
+        ])
+
+        let configuration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: true
+        )
+
+        return try! ModelContainer(
+            for: schema,
+            configurations: [configuration]
+        )
+    }()
+    #endif
 
     var body: some Scene {
         WindowGroup {
