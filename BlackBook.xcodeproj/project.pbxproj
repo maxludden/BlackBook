@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7FA1C5862F3BA27200DCDD3D /* PhoneNumberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA1C5852F3BA27200DCDD3D /* PhoneNumberKit */; };
+		7FA1C5882F3BA27200DCDD3D /* PhoneNumberKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA1C5872F3BA27200DCDD3D /* PhoneNumberKit-Dynamic */; };
+		7FA1C58A2F3BA27200DCDD3D /* PhoneNumberKit-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA1C5892F3BA27200DCDD3D /* PhoneNumberKit-Static */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		7FEDFDDF2F3B5BF400D63F72 /* BlackBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlackBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +29,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FA1C5862F3BA27200DCDD3D /* PhoneNumberKit in Frameworks */,
+				7FA1C5882F3BA27200DCDD3D /* PhoneNumberKit-Dynamic in Frameworks */,
+				7FA1C58A2F3BA27200DCDD3D /* PhoneNumberKit-Static in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,9 @@
 			);
 			name = BlackBook;
 			packageProductDependencies = (
+				7FA1C5852F3BA27200DCDD3D /* PhoneNumberKit */,
+				7FA1C5872F3BA27200DCDD3D /* PhoneNumberKit-Dynamic */,
+				7FA1C5892F3BA27200DCDD3D /* PhoneNumberKit-Static */,
 			);
 			productName = BlackBook;
 			productReference = 7FEDFDDF2F3B5BF400D63F72 /* BlackBook.app */;
@@ -94,6 +106,9 @@
 			);
 			mainGroup = 7FEDFDD62F3B5BF400D63F72;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7FA1C5842F3BA27200DCDD3D /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7FEDFDE02F3B5BF400D63F72 /* Products */;
 			projectDirPath = "";
@@ -346,6 +361,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7FA1C5842F3BA27200DCDD3D /* XCRemoteSwiftPackageReference "PhoneNumberKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7FA1C5852F3BA27200DCDD3D /* PhoneNumberKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7FA1C5842F3BA27200DCDD3D /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
+			productName = PhoneNumberKit;
+		};
+		7FA1C5872F3BA27200DCDD3D /* PhoneNumberKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7FA1C5842F3BA27200DCDD3D /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
+			productName = "PhoneNumberKit-Dynamic";
+		};
+		7FA1C5892F3BA27200DCDD3D /* PhoneNumberKit-Static */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7FA1C5842F3BA27200DCDD3D /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
+			productName = "PhoneNumberKit-Static";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7FEDFDD72F3B5BF400D63F72 /* Project object */;
 }
