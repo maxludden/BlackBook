@@ -10,9 +10,15 @@ import Foundation
 
 enum ContactMergePolicy {
 
+    enum ScalarMergeRule {
+        case preferExisting
+        case preferIncoming
+    }
+
     static func merge(
         incoming: ParsedContact,
-        existing: ParsedContact
+        existing: ParsedContact,
+        scalarRule: ScalarMergeRule = .preferExisting
     ) -> ParsedContact {
 
         ParsedContact(
@@ -60,15 +66,16 @@ enum ContactMergePolicy {
         by keyPath: KeyPath<T, K?>
     ) -> [T] {
 
-        var seen = Set<K>()
-        let combined = existing + incoming
+        var seen = Set<AnyHashable>()
 
-        return combined.filter {
-            guard let key = $0[keyPath: keyPath] else { return true }
+        return (existing + incoming).filter {
+            let key = $0[keyPath: keyPath].map(AnyHashable.init)
+                ?? AnyHashable(ObjectIdentifier(type(of: $0)))
+
             return seen.insert(key).inserted
         }
     }
-
+    
     private static func merge<T, K: Hashable>(
         _ existing: [T],
         _ incoming: [T],
@@ -76,11 +83,8 @@ enum ContactMergePolicy {
     ) -> [T] {
 
         var seen = Set<K>()
-        let combined = existing + incoming
-
-        return combined.filter {
-            let key = $0[keyPath: keyPath]
-            return seen.insert(key).inserted
+        return (existing + incoming).filter {
+            seen.insert($0[keyPath: keyPath]).inserted
         }
     }
 }

@@ -20,6 +20,10 @@ struct ParsedContact {
     var urls: [ParsedURL]
     var postalAddresses: [ParsedPostalAddress]
     var dates: [ParsedDate]
+    
+    var identityKey: String {
+        "\(givenName.lowercased())|\(familyName.lowercased())"
+    }
 }
 
 struct ParsedEmail {
