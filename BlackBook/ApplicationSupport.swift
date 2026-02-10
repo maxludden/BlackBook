@@ -78,3 +78,12 @@ func saveVideo(
 
     return destination
 }
+
+func deleteContactMedia(id: UUID) {
+    do {
+        let dir = try directoryForContact(id: id)
+        try FileManager.default.removeItem(at: dir)
+    } catch {
+        // Log, but don’t crash
+    }
+}
