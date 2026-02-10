@@ -26,7 +26,8 @@ struct BlackBookApp: App {
 
         let configuration = ModelConfiguration(
             schema: schema,
-            isStoredInMemoryOnly: false
+            isStoredInMemoryOnly: false,
+            allowsSave: true
         )
 
         do {

@@ -64,3 +64,7 @@ struct ContentView: View {
     }
 }
 
+#Preview {
+    ContentView()
+        .modelContainer(BlackBookApp.previewContainer)
+}

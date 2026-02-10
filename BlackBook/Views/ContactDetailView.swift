@@ -210,3 +210,19 @@ private struct DetailRow: View {
     }
 }
 
+#Preview {
+    let container = BlackBookApp.previewContainer
+    let context = container.mainContext
+
+    let sampleContact = Contact(
+        givenName: "Ada",
+        familyName: "Lovelace"
+    )
+    sampleContact.organization = "Analytical Engine"
+    sampleContact.jobTitle = "Mathematician"
+
+    context.insert(sampleContact)
+
+    return ContactDetailView(contact: sampleContact)
+        .modelContainer(container)
+}
