@@ -63,4 +63,12 @@ final class Contact {
         self.dates = []
         self.mediaItems = []
     }
+
+    var displayName: String {
+        let parts = [givenName, familyName]
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+
+        return parts.isEmpty ? "Unnamed Contact" : parts.joined(separator: " ")
+    }
 }

@@ -22,7 +22,7 @@ struct ContactDetailView: View {
             }
             .padding()
         }
-        .navigationTitle(contactDisplayName)
+        .navigationTitle(contact.displayName)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
@@ -38,7 +38,7 @@ private extension ContactDetailView {
                 .fill(.gray.opacity(0.3))
                 .frame(width: 96, height: 96)
 
-            Text(contactDisplayName)
+            Text(contact.displayName)
                 .font(.title2)
                 .fontWeight(.semibold)
 
@@ -143,10 +143,6 @@ private extension ContactDetailView {
 // MARK: - Helpers
 
 private extension ContactDetailView {
-
-    var contactDisplayName: String {
-        "\(contact.givenName) \(contact.familyName)"
-    }
 
     func emptyRow(_ text: String) -> some View {
         Text(text)

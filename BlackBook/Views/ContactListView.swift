@@ -18,6 +18,7 @@ struct ContactListView: View {
     @Environment(\.editMode) private var editMode
 
     @State private var pendingDeleteOffsets: IndexSet? = nil
+    @State private var pendingDeleteContactIDs: Set<Contact.ID> = []
     @State private var showDeleteConfirmation: Bool = false
     @State private var searchText: String = ""
 
@@ -169,12 +170,16 @@ struct ContactListView: View {
         .alert("Delete Contact(s)?", isPresented: $showDeleteConfirmation) {
             Button("Cancel", role: .cancel) {
                 pendingDeleteOffsets = nil
+                pendingDeleteContactIDs.removeAll()
             }
             Button("Delete", role: .destructive) {
-                if let offsets = pendingDeleteOffsets {
+                if !pendingDeleteContactIDs.isEmpty {
+                    deleteContacts(withIDs: pendingDeleteContactIDs)
+                } else if let offsets = pendingDeleteOffsets {
                     deleteContacts(offsets)
                 }
                 pendingDeleteOffsets = nil
+                pendingDeleteContactIDs.removeAll()
             }
         } message: {
             Text("This action cannot be undone.")
@@ -182,25 +187,26 @@ struct ContactListView: View {
     }
 
     private func handleDeleteCommand() {
-        if !selection.isEmpty {
-            confirmMultiDelete()
-        } else {
-            // No selection: present alert but nothing to delete
-            showDeleteConfirmation = true
-            pendingDeleteOffsets = IndexSet()
-        }
+        guard !selection.isEmpty else { return }
+        confirmMultiDelete()
     }
 
     private func confirmMultiDelete() {
-        let toDelete = selectedContacts
-        for contact in toDelete {
-            modelContext.delete(contact)
-        }
-        selection.removeAll()
+        pendingDeleteContactIDs = Set(selectedContacts.map(\.id))
+        showDeleteConfirmation = true
     }
 
     private func deleteContacts(_ offsets: IndexSet) {
         let contactsToDelete = offsets.map { filteredContacts[$0] }
+        deleteContacts(contactsToDelete)
+    }
+
+    private func deleteContacts(withIDs ids: Set<Contact.ID>) {
+        let contactsToDelete = contacts.filter { ids.contains($0.id) }
+        deleteContacts(contactsToDelete)
+    }
+
+    private func deleteContacts(_ contactsToDelete: [Contact]) {
         for contact in contactsToDelete {
             if isSelected(contact) {
                 deselect(contact)
@@ -220,7 +226,7 @@ struct ContactRowView: View {
             ContactThumbnailView(contact: contact)
 
             VStack(alignment: .leading) {
-                Text("\(contact.givenName) \(contact.familyName)")
+                Text(contact.displayName)
                     .font(.body)
                 if let organization = contact.organization, !organization.isEmpty {
                     Text(organization)
